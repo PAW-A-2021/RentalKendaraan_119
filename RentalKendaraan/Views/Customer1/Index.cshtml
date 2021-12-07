@@ -9,51 +9,60 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+@using (Html.BeginForm("Index", "Customer1s", FormMethod.Get))
+{
+    <p>
+        Ketersediaan : @Html.DropDownList("ktsd", "Pilih Gender")
+        Cari Data : @Html.TextBox("searchString")
+        <input type="submit" value="Filter" />
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NamaCustomer)
+                @Html.DisplayName("Nama Customer")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nik)
+                @Html.DisplayName("No NIK")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Alamat)
+                @Html.DisplayName("Alamat")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NoHp)
+                @Html.DisplayName("No. Hp")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdGenderNavigation)
+                @Html.DisplayName("Id Gender")
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NamaCustomer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nik)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Alamat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoHp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdGenderNavigation.IdGender)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdCustomer">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdCustomer">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdCustomer">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NamaCustomer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nik)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Alamat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoHp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdGenderNavigation.IdGender)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdCustomer">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.IdCustomer">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IdCustomer">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

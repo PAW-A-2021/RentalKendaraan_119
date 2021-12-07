@@ -9,51 +9,60 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+@using (Html.BeginForm("Index", "Peminjaman1s", FormMethod.Get))
+{
+    <p>
+        Ketersediaan : @Html.DropDownList("ktsd", "Pilih Biaya Peminjaman")
+        Cari Data : @Html.TextBox("searchString")
+        <input type="submit" value="Filter" />
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TglPeminjaman)
+                @Html.DisplayName("Tanggal Peminjaman")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Biaya)
+                @Html.DisplayName("Biaya")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdCustomerNavigation)
+                @Html.DisplayName("Id Customer")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdJaminanNavigation)
+                @Html.DisplayName("Id Jaminan")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdKendaraanNavigation)
+                @Html.DisplayName("Id Kendaraan")
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TglPeminjaman)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Biaya)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdCustomerNavigation.Alamat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdJaminanNavigation.NamaJaminan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdKendaraanNavigation.Ketersediaan)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdPeminjaman">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdPeminjaman">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdPeminjaman">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TglPeminjaman)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Biaya)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdCustomerNavigation.Alamat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdJaminanNavigation.NamaJaminan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdKendaraanNavigation.Ketersediaan)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdPeminjaman">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.IdPeminjaman">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IdPeminjaman">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
