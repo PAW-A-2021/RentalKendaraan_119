@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RentalKendaraan.Models.Gender1>
+﻿@model PaginatedList<RentalKendaraan.Models.Gender1>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,6 +12,7 @@
 @using (Html.BeginForm("Index", "Gender1s", FormMethod.Get))
 {
     <p>
+        NamaGender: @Html.DropDownList("ktsd", "Pilih Gender")
         Cari Data : @Html.TextBox("searchString")
         <input type="submit" value="Filter" />
     </p>
@@ -20,7 +21,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayName("Gender")
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Gender</a>
             </th>
             <th></th>
         </tr>
@@ -41,3 +42,24 @@
         }
     </tbody>
 </table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

@@ -19,7 +19,7 @@ namespace RentalKendaraan.Controllers
         }
 
         // GET: JenisKendaraan1
-        public async Task<IActionResult> Index(string ktsd, string searchString)
+        public async Task<IActionResult> Index(string ktsd, string searchString, string sortOrder, string currentFilter, int? pageNumber)
         {
             var ktsdList = new List<string>();
             var ktsdQuery = from d in _context.JenisKendaraan1s orderby d.NamaJenisKendaraan select d.NamaJenisKendaraan;
@@ -38,7 +38,35 @@ namespace RentalKendaraan.Controllers
                 menu = menu.Where(s => s.NamaJenisKendaraan.Contains(searchString));
             }
 
-            return View(await menu.ToListAsync());
+            //membuat pagedlist
+            ViewData["CurrentSort"] = sortOrder;
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            int pageSize = 5;
+
+            //untuk sorting
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    menu = menu.OrderByDescending(s => s.NamaJenisKendaraan);
+                    break;
+                default: //name ascending
+                    menu = menu.OrderBy(s => s.NamaJenisKendaraan);
+                    break;
+            }
+
+            return View(await PaginatedList<JenisKendaraan1>.CreateAsync(menu.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: JenisKendaraan1/Details/5
